@@ -41,12 +41,12 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
   };
 
   return (
-    <div className="mt-10 gap-10 flex flex-col">
+    <div className="mt-10 gap-10 flex flex-col ml-80	">
       {!edit
         ? todos.map((todo: any) => {
             return (
               <div key={todo.id}>
-                <table className="border-6 border-slate-100 shadow-xl w-8/12 hover:bg-emerald-600  ">
+                <table className="border-6 border-slate-100 shadow-xl w-8/12 hover:bg-emerald-600 bg-white ">
                   <tbody>
                     <tr className="border">
                       <th className="border text-xl">ID</th>
@@ -82,7 +82,7 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
         : singleTodo.map((todo: any) => {
             return (
               <div key={todo.id}>
-                <table className="border-4 shadow-xl mb-10 w-8/12">
+                <table className="border-4 shadow-xl mb-10 w-8/12 bg-white">
                   <tbody>
                     <tr className="border ">
                       <th className="border text-xl ">ID</th>
