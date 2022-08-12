@@ -41,7 +41,7 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
   };
 
   return (
-    <div className="mt-10 gap-10 flex flex-col ml-80	">
+    <div className="mt-10 gap-10 flex flex-col 	">
       {!edit
         ? todos.map((todo: any) => {
             return (
