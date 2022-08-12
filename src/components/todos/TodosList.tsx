@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef } from "react";
+import React, { FC, useState } from "react";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import { Input, Button } from "@mui/material";
@@ -8,13 +8,13 @@ type propTypes = {
   setTodos: any;
 };
 
+type foundTodoType = { id: number; title: string; completed: boolean }[];
+
 const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
   const [edit, setEdit] = useState(false);
-  const [singleTodo, setSingleTodo] = useState([]);
+  const [singleTodo, setSingleTodo] = useState<foundTodoType>([]);
   const [userInput, setUserInput] = useState<string>("");
   const [done, setDone] = useState(false);
-
-  const inputRef = useRef();
 
   // delete todo
   const deleteTdo = (id: number) => {
@@ -25,7 +25,9 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
   //edit todo
   const editTodo = (id: number) => {
     setEdit(true);
-    const foundTodo = todos.filter((todo: any) => todo.id === id);
+    const foundTodo: foundTodoType = todos.filter(
+      (todo: any) => todo.id === id
+    );
     setSingleTodo(foundTodo);
   };
 
@@ -96,7 +98,6 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
                       <td className="border">
                         <form onSubmit={(e) => saveTodo(e, todo.id)}>
                           <Input
-                            ref={inputRef}
                             value={userInput}
                             type="text"
                             onChange={(e) =>

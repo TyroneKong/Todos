@@ -3,11 +3,11 @@ import { Input, Button } from "@mui/material";
 import { getTodos } from "../../functions/functions";
 import TodosList from "../todos/TodosList";
 
-interface todos {
+type todos = {
   id: number;
   title: string;
   completed: boolean;
-}
+};
 
 const Form = () => {
   const [todos, setTodos] = useState<todos[]>([]);
@@ -29,7 +29,7 @@ const Form = () => {
   };
 
   return (
-    <div>
+    <>
       <form ref={formRef} onSubmit={(e) => addTodo(e)}>
         <Input
           placeholder="enter todo..."
@@ -42,7 +42,7 @@ const Form = () => {
         </Button>
       </form>
       <TodosList setTodos={setTodos} todos={todos} />
-    </div>
+    </>
   );
 };
 
