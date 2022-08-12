@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { FC, useState, useEffect, useRef } from "react";
 import { Input, Button } from "@mui/material";
 import { getTodos } from "../../functions/functions";
 import TodosList from "../todos/TodosList";
@@ -9,7 +9,7 @@ type todos = {
   completed: boolean;
 };
 
-const Form = () => {
+const Form: FC = () => {
   const [todos, setTodos] = useState<todos[]>([]);
   const [userInput, setUserInput] = useState("");
 
@@ -19,6 +19,7 @@ const Form = () => {
     getTodos().then((response) => setTodos(response?.data));
   }, []);
 
+  //ADD TODO
   const addTodo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setTodos([

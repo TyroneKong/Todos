@@ -5,8 +5,6 @@ const todosurl = axios.create({
 })
 
 
-
-
 export const getTodos= async()=>{
     try {
   return todosurl.get("/todos")

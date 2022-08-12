@@ -4,25 +4,35 @@ import EditIcon from "@mui/icons-material/Edit";
 import { Input, Button } from "@mui/material";
 
 type propTypes = {
-  todos: any;
+  todos: {
+    userId?: number;
+    id: number;
+    title: string;
+    completed: boolean;
+  }[];
   setTodos: any;
 };
 
-type foundTodoType = { id: number; title: string; completed: boolean }[];
+type foundTodoType = {
+  userId?: number;
+  id: number;
+  title: string;
+  completed: boolean;
+}[];
 
 const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
-  const [edit, setEdit] = useState(false);
+  const [edit, setEdit] = useState<boolean>(false);
   const [singleTodo, setSingleTodo] = useState<foundTodoType>([]);
   const [userInput, setUserInput] = useState<string>("");
   const [done, setDone] = useState(false);
 
-  // delete todo
+  // DELETE TODO
   const deleteTdo = (id: number) => {
     const newTodos = todos.filter((todo: any) => todo.id !== id);
     setTodos(newTodos);
   };
 
-  //edit todo
+  //EDIT TODO
   const editTodo = (id: number) => {
     setEdit(true);
     const foundTodo: foundTodoType = todos.filter(
@@ -31,7 +41,7 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
     setSingleTodo(foundTodo);
   };
 
-  //save todo
+  //SAVE TODO
   const saveTodo = (e: React.FormEvent<HTMLFormElement>, id: number) => {
     e.preventDefault();
 
@@ -45,44 +55,46 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
   return (
     <div className="mt-10 gap-10 flex flex-col 	">
       {!edit
-        ? todos.map((todo: any) => {
-            return (
-              <div key={todo.id}>
-                <table className="border-6 border-slate-100 shadow-xl w-8/12 hover:bg-emerald-600 bg-white ">
-                  <tbody>
-                    <tr className="border">
-                      <th className="border text-xl">ID</th>
-                      <th className="border text-xl w-2/5">Task</th>
-                      <th className="border text-xl ">Edit</th>
-                      <th className="border text-xl">Delete</th>
-                    </tr>
-                    <tr>
-                      <td className="border">{todo.id}</td>
+        ? todos
+            .sort((a, b) => b.id - a.id)
+            .map((todo: any) => {
+              return (
+                <div key={todo.id}>
+                  <table className="border-6 border-slate-100 shadow-xl w-8/12 hover:bg-emerald-600 bg-white ">
+                    <tbody>
+                      <tr className="border">
+                        <th className="border text-xl">ID</th>
+                        <th className="border text-xl w-2/5">Task</th>
+                        <th className="border text-xl ">Edit</th>
+                        <th className="border text-xl">Delete</th>
+                      </tr>
+                      <tr>
+                        <td className="border">{todo.id}</td>
 
-                      <td className="border text-xl">{todo.title}</td>
+                        <td className="border text-xl">{todo.title}</td>
 
-                      <td className="border">
-                        <EditIcon
-                          className="cursor-pointer"
-                          onClick={() => editTodo(todo.id)}
-                          fontSize="large"
-                          style={{ color: "blue" }}
-                        />
-                      </td>
-                      <td>
-                        <DeleteOutlineOutlinedIcon
-                          className="cursor-pointer"
-                          onClick={() => deleteTdo(todo.id)}
-                          fontSize="large"
-                          style={{ color: "red" }}
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            );
-          })
+                        <td className="border">
+                          <EditIcon
+                            className="cursor-pointer"
+                            onClick={() => editTodo(todo.id)}
+                            fontSize="large"
+                            style={{ color: "blue" }}
+                          />
+                        </td>
+                        <td>
+                          <DeleteOutlineOutlinedIcon
+                            className="cursor-pointer"
+                            onClick={() => deleteTdo(todo.id)}
+                            fontSize="large"
+                            style={{ color: "red" }}
+                          />
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              );
+            })
         : singleTodo.map((todo: any) => {
             return (
               <div key={todo.id}>
