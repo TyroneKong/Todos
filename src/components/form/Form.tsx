@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Input, Button } from "@mui/material";
 import { getTodos } from "../../functions/functions";
 import TodosList from "../todos/TodosList";
@@ -13,6 +13,8 @@ const Form = () => {
   const [todos, setTodos] = useState<todos[]>([]);
   const [userInput, setUserInput] = useState("");
 
+  const formRef = useRef<HTMLFormElement>(null);
+
   useEffect(() => {
     getTodos().then((response) => setTodos(response?.data));
   }, []);
@@ -23,11 +25,12 @@ const Form = () => {
       ...todos,
       { id: todos.length + 1, title: userInput, completed: false },
     ]);
+    formRef.current?.reset();
   };
 
   return (
     <div>
-      <form onSubmit={(e) => addTodo(e)}>
+      <form ref={formRef} onSubmit={(e) => addTodo(e)}>
         <Input
           placeholder="enter todo..."
           onChange={(e) => setUserInput(e.currentTarget.value)}
