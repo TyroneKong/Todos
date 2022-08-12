@@ -24,7 +24,7 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
 
   //edit todo
   const editTodo = (id: number) => {
-    setEdit((prevEdit) => (prevEdit ? false : true));
+    setEdit(true);
     const foundTodo = todos.filter((todo: any) => todo.id === id);
     setSingleTodo(foundTodo);
   };
@@ -87,9 +87,6 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
                     <tr className="border ">
                       <th className="border text-xl ">ID</th>
                       <th className="border text-xl">Task</th>
-
-                      <th className="border text-xl ">Edit</th>
-                      <th className="border text-xl">Delete</th>
                     </tr>
                     <tr>
                       <td className="border">{todo.id}</td>
@@ -114,23 +111,6 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
                             </Button>
                           </div>
                         </form>
-                      </td>
-
-                      <td>
-                        <EditIcon
-                          className="cursor-pointer"
-                          onClick={() => editTodo(todo.id)}
-                          fontSize="large"
-                          style={{ color: "blue" }}
-                        />
-                      </td>
-                      <td>
-                        <DeleteOutlineOutlinedIcon
-                          className="cursor-pointer"
-                          onClick={() => deleteTdo(todo.id)}
-                          fontSize="large"
-                          style={{ color: "red" }}
-                        />
                       </td>
                     </tr>
                   </tbody>
