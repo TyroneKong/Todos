@@ -61,6 +61,7 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
 
                       <td className="border">
                         <EditIcon
+                          className="cursor-pointer"
                           onClick={() => editTodo(todo.id)}
                           fontSize="large"
                           style={{ color: "blue" }}
@@ -68,6 +69,7 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
                       </td>
                       <td>
                         <DeleteOutlineOutlinedIcon
+                          className="cursor-pointer"
                           onClick={() => deleteTdo(todo.id)}
                           fontSize="large"
                           style={{ color: "red" }}
