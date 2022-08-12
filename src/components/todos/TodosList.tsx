@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import { Input, Button } from "@mui/material";
+import { TextRotationDown } from "@mui/icons-material";
 
 type propTypes = {
   todos: {
@@ -70,9 +71,7 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
                       </tr>
                       <tr>
                         <td className="border">{todo.id}</td>
-
                         <td className="border text-xl">{todo.title}</td>
-
                         <td className="border">
                           <EditIcon
                             className="cursor-pointer"
@@ -106,12 +105,12 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
                     </tr>
                     <tr>
                       <td className="border">{todo.id}</td>
-
                       <td className="border">
                         <form onSubmit={(e) => saveTodo(e, todo.id)}>
                           <Input
                             value={userInput}
                             type="text"
+                            placeholder={todo.title}
                             onChange={(e) =>
                               setUserInput(e.currentTarget.value)
                             }

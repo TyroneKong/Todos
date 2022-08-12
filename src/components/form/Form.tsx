@@ -16,7 +16,7 @@ const Form: FC = () => {
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    getTodos().then((response) => setTodos(response?.data));
+    getTodos().then((response: any) => setTodos(response));
   }, []);
 
   //ADD TODO

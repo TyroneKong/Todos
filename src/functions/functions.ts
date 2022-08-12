@@ -7,7 +7,8 @@ const todosurl = axios.create({
 
 export const getTodos= async()=>{
     try {
-  return todosurl.get("/todos")
+  const {data} = await todosurl.get("/todos")
+  return data
 
     } catch (error) {
         console.log(error)
