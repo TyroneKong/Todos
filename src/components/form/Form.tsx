@@ -2,6 +2,7 @@ import React, { FC, useState, useEffect, useRef } from "react";
 import { Input, Button } from "@mui/material";
 import { getTodos } from "../../functions/functions";
 import TodosList from "../todos/TodosList";
+import axios from "axios";
 
 type todos = {
   id: number;
@@ -15,18 +16,32 @@ const Form: FC = () => {
 
   const formRef = useRef<HTMLFormElement>(null);
 
-  useEffect(() => {
+  const fetchTodos = () => {
     getTodos().then((response: any) => setTodos(response));
-  }, []);
+  };
+
+  useEffect(() => {
+    fetchTodos();
+  }, [todos]);
 
   //ADD TODO
   const addTodo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setTodos([
-      ...todos,
-      { id: todos.length + 1, title: userInput, completed: false },
-    ]);
+    postRequest();
+    setTodos(todos);
+    // setTodos([
+    //   ...todos,
+    //   { id: todos.length + 1, title: userInput, completed: false },
+    // ]);
+
     formRef.current?.reset();
+  };
+
+  const postRequest = () => {
+    axios.post("http://localhost:4002/todos", {
+      title: userInput,
+      completed: false,
+    });
   };
 
   return (

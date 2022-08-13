@@ -1,8 +1,9 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect } from "react";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import { Input, Button } from "@mui/material";
 import CompletedTodos from "./CompetedTodos";
+import axios from "axios";
 
 type propTypes = {
   todos: {
@@ -29,8 +30,11 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
 
   // DELETE TODO
   const deleteTdo = (id: number) => {
-    const newTodos = todos.filter((todo: any) => todo.id !== id);
-    setTodos(newTodos);
+    axios.delete(`http://localhost:4002/todos/${id}`);
+
+    // mutating state storage
+    // const newTodos = todos.filter((todo: any) => todo.id !== id);
+    // setTodos(newTodos);
   };
 
   //EDIT TODO
@@ -45,11 +49,33 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
   //SAVE TODO
   const saveTodo = (e: React.FormEvent<HTMLFormElement>, id: number) => {
     e.preventDefault();
+    axios.put(`http://localhost:4002/todos/${id}`, {
+      title: userInput,
+      completed: false,
+    });
 
-    const editedTask = todos.filter((todo: any) => todo.id === id);
+    //muating state storage
+    // const editedTask = todos.filter((todo: any) => todo.id === id);
 
-    editedTask[0].title = userInput;
+    // editedTask[0].title = userInput;
     setEdit(false);
+  };
+
+  //save to localstorage
+  const savetoLocal = () => {
+    localStorage.setItem("completedTodos", JSON.stringify(completedTodo));
+  };
+
+  //get from localstorage
+  const getFromLocal = () => {
+    if (localStorage.getItem("completedTodos") === null) {
+      localStorage.setItem("completedTodos", JSON.stringify(completedTodo));
+    } else {
+      const localTodos = JSON.parse(
+        localStorage.getItem("completedTodos") || "{}"
+      );
+      setCompletedTodo(localTodos);
+    }
   };
 
   //COMPLETED TODOS
@@ -63,6 +89,16 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
 
     deleteTdo(id);
   };
+
+  useEffect(() => {
+    if (completedTodo.length > 0) {
+      savetoLocal();
+    }
+  }, [completedTodo]);
+
+  useEffect(() => {
+    getFromLocal();
+  }, []);
 
   return (
     <div className="mt-10 gap-10 flex flex-col 	">
@@ -149,7 +185,10 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
               </div>
             );
           })}
-      <CompletedTodos completedTodo={completedTodo} />
+      <CompletedTodos
+        setCompletedTodo={setCompletedTodo}
+        completedTodo={completedTodo}
+      />
       {completedTodo.length < 1 && (
         <h2 className="text-xl">No completed todos</h2>
       )}
