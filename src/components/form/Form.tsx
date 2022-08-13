@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useRef } from "react";
+import React, { FC, useState, useEffect, useRef, useCallback } from "react";
 import { Input, Button } from "@mui/material";
 import { getTodos } from "../../functions/functions";
 import TodosList from "../todos/TodosList";
@@ -16,19 +16,22 @@ const Form: FC = () => {
 
   const formRef = useRef<HTMLFormElement>(null);
 
+  console.log("parent rendered!");
+
   const fetchTodos = () => {
     getTodos().then((response: any) => setTodos(response));
   };
 
   useEffect(() => {
     fetchTodos();
-  }, [todos]);
+  }, []);
 
   //ADD TODO
   const addTodo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     postRequest();
     setTodos(todos);
+
     // setTodos([
     //   ...todos,
     //   { id: todos.length + 1, title: userInput, completed: false },
@@ -42,6 +45,7 @@ const Form: FC = () => {
       title: userInput,
       completed: false,
     });
+    fetchTodos();
   };
 
   return (
@@ -57,7 +61,7 @@ const Form: FC = () => {
           Add todo
         </Button>
       </form>
-      <TodosList setTodos={setTodos} todos={todos} />
+      <TodosList fetchTodos={fetchTodos} setTodos={setTodos} todos={todos} />
     </>
   );
 };

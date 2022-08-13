@@ -13,6 +13,7 @@ type propTypes = {
     completed: boolean;
   }[];
   setTodos: any;
+  fetchTodos: any;
 };
 
 type foundTodoType = {
@@ -22,16 +23,15 @@ type foundTodoType = {
   completed: boolean;
 }[];
 
-const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
+const TodosList: FC<propTypes> = ({ todos, setTodos, fetchTodos }) => {
   const [edit, setEdit] = useState<boolean>(false);
   const [singleTodo, setSingleTodo] = useState<foundTodoType>([]);
   const [userInput, setUserInput] = useState<string>("");
   const [completedTodo, setCompletedTodo] = useState<foundTodoType>([]);
-
   // DELETE TODO
   const deleteTdo = (id: number) => {
     axios.delete(`http://localhost:4002/todos/${id}`);
-
+    fetchTodos();
     // mutating state storage as opposed to json
     // const newTodos = todos.filter((todo: any) => todo.id !== id);
     // setTodos(newTodos);
@@ -59,6 +59,7 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
 
     // editedTask[0].title = userInput;
     setEdit(false);
+    fetchTodos();
   };
 
   //save to localstorage

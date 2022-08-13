@@ -6,6 +6,11 @@
       "id": 6
     },
     {
+      "title": "paint the house",
+      "completed": false,
+      "id": 8
+    },
+    {
       "title": "wash the car",
       "completed": false,
       "id": 9
@@ -16,9 +21,14 @@
       "id": 10
     },
     {
-      "title": "code review",
+      "title": "clean bathroom",
       "completed": false,
-      "id": 13
+      "id": 11
+    },
+    {
+      "title": "do grocery shopping",
+      "completed": false,
+      "id": 12
     },
     {
       "title": "read a book",
@@ -26,9 +36,14 @@
       "id": 14
     },
     {
-      "title": "chest workout",
+      "title": "workout",
       "completed": false,
       "id": 17
+    },
+    {
+      "title": "testing again",
+      "completed": false,
+      "id": 20
     }
   ]
 }
