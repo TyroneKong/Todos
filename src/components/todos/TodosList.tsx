@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import { Input, Button } from "@mui/material";
-import { TextRotationDown } from "@mui/icons-material";
+import CompletedTodos from "./CompetedTodos";
 
 type propTypes = {
   todos: {
@@ -25,7 +25,7 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
   const [edit, setEdit] = useState<boolean>(false);
   const [singleTodo, setSingleTodo] = useState<foundTodoType>([]);
   const [userInput, setUserInput] = useState<string>("");
-  const [done, setDone] = useState(false);
+  const [completedTodo, setCompletedTodo] = useState<foundTodoType>([]);
 
   // DELETE TODO
   const deleteTdo = (id: number) => {
@@ -47,10 +47,21 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
     e.preventDefault();
 
     const editedTask = todos.filter((todo: any) => todo.id === id);
-    const taskItems = [...editedTask];
 
-    taskItems[0].title = userInput;
+    editedTask[0].title = userInput;
     setEdit(false);
+  };
+
+  //COMPLETED TODOS
+
+  const todoCompleted = (id: number) => {
+    const foundTodo: foundTodoType = todos.filter(
+      (todo: any) => todo.id === id
+    );
+
+    setCompletedTodo([...completedTodo, ...foundTodo]);
+
+    deleteTdo(id);
   };
 
   return (
@@ -68,6 +79,7 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
                         <th className="border text-xl w-2/5">Task</th>
                         <th className="border text-xl ">Edit</th>
                         <th className="border text-xl">Delete</th>
+                        <th className="border text-xl">Completed</th>
                       </tr>
                       <tr>
                         <td className="border">{todo.id}</td>
@@ -87,6 +99,11 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
                             fontSize="large"
                             style={{ color: "red" }}
                           />
+                        </td>
+                        <td className="border cursor-pointer">
+                          <Button onClick={() => todoCompleted(todo.id)}>
+                            set completed
+                          </Button>
                         </td>
                       </tr>
                     </tbody>
@@ -132,6 +149,10 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
               </div>
             );
           })}
+      <CompletedTodos completedTodo={completedTodo} />
+      {completedTodo.length < 1 && (
+        <h2 className="text-xl">No completed todos</h2>
+      )}
     </div>
   );
 };
