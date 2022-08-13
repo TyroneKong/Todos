@@ -1,8 +1,6 @@
 import React, { FC } from "react";
 import DoneOutlineIcon from "@mui/icons-material/DoneOutline";
-
 import { Button } from "@mui/material";
-import { TodayRounded } from "@mui/icons-material";
 
 type propTypes = {
   completedTodo: {

@@ -6,11 +6,6 @@
       "id": 6
     },
     {
-      "title": "paint the house",
-      "completed": false,
-      "id": 8
-    },
-    {
       "title": "wash the car",
       "completed": false,
       "id": 9
@@ -19,11 +14,6 @@
       "title": "clean bedroom",
       "completed": false,
       "id": 10
-    },
-    {
-      "title": "clean bathroom",
-      "completed": false,
-      "id": 11
     },
     {
       "title": "code review",
@@ -36,7 +26,7 @@
       "id": 14
     },
     {
-      "title": "workout",
+      "title": "chest workout",
       "completed": false,
       "id": 17
     }

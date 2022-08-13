@@ -32,7 +32,7 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
   const deleteTdo = (id: number) => {
     axios.delete(`http://localhost:4002/todos/${id}`);
 
-    // mutating state storage
+    // mutating state storage as opposed to json
     // const newTodos = todos.filter((todo: any) => todo.id !== id);
     // setTodos(newTodos);
   };
@@ -54,7 +54,7 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
       completed: false,
     });
 
-    //muating state storage
+    //muating state storage as opposed to json
     // const editedTask = todos.filter((todo: any) => todo.id === id);
 
     // editedTask[0].title = userInput;
@@ -84,18 +84,18 @@ const TodosList: FC<propTypes> = ({ todos, setTodos }) => {
     const foundTodo: foundTodoType = todos.filter(
       (todo: any) => todo.id === id
     );
-
     setCompletedTodo([...completedTodo, ...foundTodo]);
-
     deleteTdo(id);
   };
 
+  //save to local upon render
   useEffect(() => {
     if (completedTodo.length > 0) {
       savetoLocal();
     }
   }, [completedTodo]);
 
+  //get from local upon render
   useEffect(() => {
     getFromLocal();
   }, []);
